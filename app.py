@@ -60,7 +60,7 @@ data = pd.DataFrame(columns=["Location", "Year", "pH", "Turbidity"])
 
 # HOME PAGE
 if selected == "Home":
-    IMAGE_PATH = "/Users/haroldcastillo/Documents/taal_dashboard/banner.jpg"
+    IMAGE_PATH = "images/banner.jpg"
     st.image(IMAGE_PATH, width=900)
 
     st.markdown("<hr style='border: 1px solid #555;'>", unsafe_allow_html=True)
