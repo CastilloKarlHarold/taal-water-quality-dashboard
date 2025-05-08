@@ -1,5 +1,4 @@
-﻿  Table 1. Descriptive Statistics for Water Quality Parameters,,,,,,,,
-,Surface Temp,Middle Temp,Bottom Temp,pH,Ammonia,Dissolved Oxygen,Nitrate,Phosphate
+﻿,Surface Temp,Middle Temp,Bottom Temp,pH,Ammonia,Dissolved Oxygen,Nitrate,Phosphate
 Count,1279,1279,1279,1279,1279,1279,1279,1279
 Mean,0.4051,0.6184,0.3138,0.7074,0.0128,0.4003,0.0856,0.6286
 Std,0.1404,0.1106,0.1476,0.1834,0.0288,0.1494,0.0448,0.0738
