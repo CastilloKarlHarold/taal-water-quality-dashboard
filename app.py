@@ -154,11 +154,12 @@ elif selected == "Exploratory Data Analysis (EDA)":
         with tab1:
             st.subheader("📋 Summary Statistics")
 
-            try:
-                df_water = pd.read_csv(
-                    "/Users/haroldcastillo/Documents/taal_dashboard/Descriptive Statistics for Water Quality Parameters.csv")
-                df_external = pd.read_csv(
-                    "/Users/haroldcastillo/Documents/taal_dashboard/Descriptive Statistics for External Environmental Factors.csv")
+            water_path = "Descriptive Statistics for Water Quality Parameters.csv"
+            external_path = "Descriptive Statistics for External Environmental Factors.csv"
+
+            if os.path.exists(water_path) and os.path.exists(external_path):
+                df_water = pd.read_csv(water_path)
+                df_external = pd.read_csv(external_path)
 
                 st.markdown("**Descriptive Statistics for Water Quality Parameters**")
                 st.dataframe(df_water, use_container_width=True)
@@ -166,16 +167,16 @@ elif selected == "Exploratory Data Analysis (EDA)":
                 st.markdown("**Descriptive Statistics for External Environmental Factors**")
                 st.dataframe(df_external, use_container_width=True)
 
-            except Exception as e:
-                st.error(f"Error loading summary statistics files: {e}")
-
-            discussion_text = """
+                discussion_text = """
                 The summary statistics provide important insights into the central tendencies, dispersion, and distribution of each water quality and environmental parameter. 
                 These tables separate the internal aquatic conditions (like pH and turbidity) from external influences (like air temperature and carbon dioxide), allowing for better focused analysis. 
 
                 For example, variations in water quality indicators may be linked to environmental factors over time. Observing each set independently helps identify patterns that could point to pollution, climate effects, or ecosystem shifts.
                 """
-            st.markdown(discussion_box(discussion_text, font_size="20px"), unsafe_allow_html=True)
+                st.markdown(discussion_box(discussion_text, font_size="20px"), unsafe_allow_html=True)
+
+            else:
+                st.error("Summary CSV files not found. Please make sure the following files are in your repository:\n\n- `Descriptive Statistics for Water Quality Parameters.csv`\n- `Descriptive Statistics for External Environmental Factors.csv`")
 
         with tab2:
             st.subheader("🔗 Correlation Matrix")
