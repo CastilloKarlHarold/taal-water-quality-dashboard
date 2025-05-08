@@ -382,7 +382,7 @@ elif selected == "Model Evaluation":
         with tab4:
             st.subheader("📊 Water Quality Index (WQI) Evaluation")
 
-            base_folder = Path("/Users/haroldcastillo/Documents/taal_dashboard")
+            base_folder = Path(".")
             csv_map = {
                 "Weekly": base_folder / "predicted_wqi_weekly.csv",
                 "Monthly": base_folder / "predicted_wqi_monthly.csv",
