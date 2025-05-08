@@ -60,8 +60,8 @@ data = pd.DataFrame(columns=["Location", "Year", "pH", "Turbidity"])
 
 # HOME PAGE
 if selected == "Home":
-    IMAGE_PATH = "images/banner.jpg"
-    st.image(IMAGE_PATH, width=900)
+    image_path = Path("/Users/haroldcastillo/Documents/taal_dashboard/images/banner.jpg")
+    st.image(str(image_path), width=900)
 
     st.markdown("<hr style='border: 1px solid #555;'>", unsafe_allow_html=True)
 
@@ -153,16 +153,28 @@ elif selected == "Exploratory Data Analysis (EDA)":
 
         with tab1:
             st.subheader("📋 Summary Statistics")
-            st.dataframe(df.describe(include='all').T)  # This will show all statistics for every column
 
-            # Enhanced discussion box
+            try:
+                df_water = pd.read_csv(
+                    "/Users/haroldcastillo/Documents/taal_dashboard/Descriptive Statistics for Water Quality Parameters.csv")
+                df_external = pd.read_csv(
+                    "/Users/haroldcastillo/Documents/taal_dashboard/Descriptive Statistics for External Environmental Factors.csv")
+
+                st.markdown("**Descriptive Statistics for Water Quality Parameters**")
+                st.dataframe(df_water, use_container_width=True)
+
+                st.markdown("**Descriptive Statistics for External Environmental Factors**")
+                st.dataframe(df_external, use_container_width=True)
+
+            except Exception as e:
+                st.error(f"Error loading summary statistics files: {e}")
+
             discussion_text = """
-            The summary statistics provide important insights into the central tendencies, dispersion, and distribution of each water quality parameter. By examining statistics such as mean, median, and standard deviation, we can identify anomalies and outliers in the data. For example, a high standard deviation in parameters like pH or turbidity suggests variability in water quality, which may indicate pollution or environmental changes. 
+                The summary statistics provide important insights into the central tendencies, dispersion, and distribution of each water quality and environmental parameter. 
+                These tables separate the internal aquatic conditions (like pH and turbidity) from external influences (like air temperature and carbon dioxide), allowing for better focused analysis. 
 
-            Parameters like pH, turbidity, and dissolved oxygen are critical for understanding the overall health of the aquatic ecosystem. If pH levels are too high or too low, it can lead to harmful effects on aquatic organisms. Similarly, high turbidity levels can reduce light penetration and affect photosynthesis in aquatic plants. 
-
-            Understanding the distribution of these parameters is crucial for predicting potential environmental impacts and making informed decisions about water quality management.
-            """
+                For example, variations in water quality indicators may be linked to environmental factors over time. Observing each set independently helps identify patterns that could point to pollution, climate effects, or ecosystem shifts.
+                """
             st.markdown(discussion_box(discussion_text, font_size="20px"), unsafe_allow_html=True)
 
         with tab2:
@@ -518,19 +530,25 @@ elif selected == "Predictions & Recommendations":
     st.markdown(prediction_summary, unsafe_allow_html=True)
 
     recommendations = """
-    <div style='border-left: 5px solid #00BFC4; padding-left: 15px; background-color: #f8f9fa;'>
-    <h3 style='color:#00BFC4;'>Recommendations for Water Quality Management</h3>
-    <ul style='font-size: 18px;'>
-        <li><strong>Establish Continuous Monitoring:</strong> Deploy sensors at multiple depths and sites to capture temperature, pH, and DO in real-time, aiding in early detection of anomalies.</li>
-        <li><strong>Address Nutrient Runoff:</strong> Regulate agricultural activities near the lake to minimize nutrient discharge, especially nitrate and phosphate, to combat eutrophication.</li>
-        <li><strong>Predictive Maintenance and Alerts:</strong> Use the model outputs to develop an automated alert system for potential water quality decline based on predicted DO and pH drops.</li>
-        <li><strong>Integrate Environmental Context:</strong> Include volcanic and meteorological data in future models to further enhance prediction accuracy.</li>
-        <li><strong>Community Engagement:</strong> Share insights with local stakeholders to promote informed decision-making and sustainable lake resource use.</li>
-        <li><strong>Policy Integration:</strong> Incorporate model-based predictions into local government environmental action plans, targeting specific regions (e.g., Site B showing rising ammonia) for remediation.</li>
-        <li><strong>Model Retraining:</strong> Regularly update the prediction models with new data to adapt to changing environmental conditions.</li>
-    </ul>
-    </div>
-    """
+        <div style='border-left: 5px solid #00BFC4; padding-left: 15px; background-color: #f8f9fa;'>
+        <h3 style='color:#00BFC4;'>Recommendations for Water Quality Management</h3>
+        <ul style='font-size: 18px;'>
+            <li><strong>Establish Continuous Monitoring:</strong> Deploy sensors at multiple depths and sites to capture temperature, pH, and DO in real-time, aiding in early detection of anomalies.</li>
+            <li><strong>Address Nutrient Runoff:</strong> Regulate agricultural activities near the lake to minimize nutrient discharge, especially nitrate and phosphate, to combat eutrophication.</li>
+            <li><strong>Predictive Maintenance and Alerts:</strong> Use the model outputs to develop an automated alert system for potential water quality decline based on predicted DO and pH drops.</li>
+            <li><strong>Integrate Environmental Context:</strong> Include volcanic and meteorological data in future models to further enhance prediction accuracy.</li>
+            <li><strong>Community Engagement:</strong> Share insights with local stakeholders to promote informed decision-making and sustainable lake resource use.</li>
+            <li><strong>Policy Integration:</strong> Incorporate model-based predictions into local government environmental action plans, targeting specific regions (e.g., Site B showing rising ammonia) for remediation.</li>
+            <li><strong>Model Retraining:</strong> Regularly update the prediction models with new data to adapt to changing environmental conditions.</li>
+            <li><strong>Real-time Data Integration:</strong> Incorporate real-time data into prediction models through platforms like Streamlit to enhance prediction accuracy and support proactive decision-making.</li>
+            <li><strong>Long-term Trends and Variables:</strong> Adjust models to reflect long-term trends and include additional environmental variables to improve reliability.</li>
+            <li><strong>Human Activity Monitoring:</strong> Adopt a data-driven approach to monitor human activities, such as fishing and land use, to assess their influence on water quality and conservation efforts.</li>
+            <li><strong>Biodiversity Tracking:</strong> Track biodiversity in the lake to identify critical areas for conservation, providing valuable insights for ecosystem health.</li>
+            <li><strong>Adaptive Management Strategies:</strong> Use regular updates from monitoring systems to implement adaptive management strategies that ensure timely, data-informed actions for ecological balance.</li>
+        </ul>
+        </div>
+        """
+
     st.markdown(recommendations, unsafe_allow_html=True)
 
     st.info("To explore prediction trends, go to the 'Model Evaluation' tab and interact with the graphs based on location, year, and parameters.")
