@@ -338,7 +338,7 @@ elif selected == "Model Evaluation":
                 'pH', 'Ammonia', 'Nitrate', 'Phosphate', 'Dissolved Oxygen'
             ]
 
-            base_folder = Path("/Users/haroldcastillo/Documents/taal_dashboard")
+            base_folder = Path("weekly_predictions").parent.resolve()
             view_folder_map = {
                 "Weekly": base_folder / "weekly_predictions",
                 "Monthly": base_folder / "monthly_predictions",
