@@ -19,7 +19,7 @@ def get_video_base64(file_path):
     return encoded
 
 # Load and encode the .mov video
-video_base64 = get_video_base64("media/background.mov")
+video_base64 = get_video_base64("/Users/haroldcastillo/Documents/taal_dashboard/background.MOV")
 
 # Page config
 st.set_page_config(page_title="Water Quality Dashboard", layout="wide")
