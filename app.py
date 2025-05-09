@@ -10,11 +10,63 @@ import plotly.graph_objects as go
 import numpy as np
 from pathlib import Path
 import streamlit.components.v1 as components
+import base64  # ADD THIS
+
+# Function to convert video to base64
+def get_video_base64(file_path):
+    with open(file_path, "rb") as video_file:
+        encoded = base64.b64encode(video_file.read()).decode()
+    return encoded
+
+# Load and encode the .mov video
+video_base64 = get_video_base64("/Users/haroldcastillo/Downloads/taal_dashboard/background.mov")  # Update path if needed
 
 # Page config
 st.set_page_config(page_title="Water Quality Dashboard", layout="wide")
 
-# Dark mode CSS
+# Custom CSS styling with video background in sidebar
+st.markdown(f"""
+<style>
+[data-testid="stSidebar"] > div:first-child {{
+    background: url("data:video/mp4;base64,{video_base64}") no-repeat center center;
+    background-size: cover;
+}}
+
+.sidebar-button {{
+    display: block;
+    width: 100%;
+    padding: 0.6em;
+    text-align: center;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 0.5em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}}
+
+.sidebar-button:hover {{
+    background-color: #0056b3;
+}}
+
+h1, h2, h3, h4, h5, h6, p {{
+    color: white;
+}}
+
+body {{
+    background-color: black;
+}}
+
+.centered {{
+    text-align: center;
+}}
+</style>
+""", unsafe_allow_html=True)
+
+# Dark mode CSS for main content
 st.markdown("""
     <style>
         .block-container {
